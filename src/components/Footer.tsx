@@ -9,7 +9,7 @@ const Footer = () => {
           <div className="md:flex md:items-start md:justify-between">
             <div className="md:w-1/3 md:mr-28">
               <a className="flex py-5 justify-center md:justify-start" href="#">
-                <Image width={150} height={40} src="/images/topcv-logo-new.png" alt="topcv logo" />
+                <Image width={150} height={40} src="/images/topcv-logo-cropped.png" alt="topcv logo" />
               </a>
               <div className="flex flex-row justify-between mb-9">
                 {/* Logos can be added here */}

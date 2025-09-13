@@ -48,7 +48,7 @@ const Awards = () => {
                   alt={award.title}
                   width={100}
                   height={100}
-                  objectFit="contain"
+                  className="object-contain"
                 />
               </div>
               <div className="flex-1">

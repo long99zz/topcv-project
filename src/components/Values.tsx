@@ -36,7 +36,7 @@ const Values = () => {
                 alt="Doanh nghiệp sử dụng TopCV Smart Recruitment Platform"
                 width={400}
                 height={300}
-                objectFit="contain"
+                className="object-contain"
               />
             </div>
           </div>
@@ -67,7 +67,7 @@ const Values = () => {
                 alt="Nhà tuyển dụng sử dụng TopCV Smart Recruitment Platform"
                 width={400}
                 height={300}
-                objectFit="contain"
+                className="object-contain"
               />
             </div>
           </div>

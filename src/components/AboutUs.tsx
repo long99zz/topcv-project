@@ -50,7 +50,7 @@ const AboutUs = () => {
               alt="Nhân sự của TopCV"
               width={500}
               height={400}
-              objectFit="contain"
+              className="object-contain"
             />
           </div>
         </div>
