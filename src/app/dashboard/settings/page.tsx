@@ -57,22 +57,22 @@ const SettingsPage = () => {
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="bg-gray-50 min-h-screen w-full">
       <DashboardHeader 
         onMenuClick={() => setSidebarOpen(!sidebarOpen)} 
         onToggleSidebar={() => setSidebarCollapsed(!sidebarCollapsed)}
       />
       
-      <div className="flex">
+      <div className="flex w-full">
         <Sidebar 
           isOpen={sidebarOpen} 
           onClose={() => setSidebarOpen(false)}
           isCollapsed={sidebarCollapsed}
         />
         
-        <main className={`flex-1 transition-all duration-300 ${
+        <main className={`flex-1 w-full transition-all duration-300 ${
           sidebarCollapsed ? 'lg:ml-16' : 'lg:ml-64'
-        }`}>
+        } lg:w-auto`}>
           <div className="px-4 py-4">
             <div className="max-w-7xl mx-auto">
               <div className="mb-8">

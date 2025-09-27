@@ -189,17 +189,18 @@ const Sidebar = ({ isOpen, onClose, isCollapsed }: SidebarProps) => {
 
   return (
     <>
-      {/* Mobile overlay */}
+      {/* Mobile backdrop - transparent overlay for click-to-close */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-20 bg-black bg-opacity-50 lg:hidden"
+          className="fixed inset-0 z-20 lg:hidden"
           onClick={onClose}
+          style={{ backgroundColor: 'rgba(0,0,0,0.3)', top: '64px' }}
         />
       )}
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-16 left-0 z-30 h-full bg-white border-r border-gray-200 transform transition-all duration-300 ease-in-out ${
+        className={`fixed top-16 left-0 z-30 h-[calc(100vh-4rem)] bg-white border-r border-gray-200 transform transition-all duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         } ${isCollapsed ? 'w-16' : 'w-64'}`}
       >

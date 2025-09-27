@@ -1,18 +1,21 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
+import DashboardHeader from '@/components/dashboard/DashboardHeader';
+import Sidebar from '@/components/dashboard/Sidebar';
 import { 
-  GiftIcon, 
-  StarIcon, 
-  CreditCardIcon, 
-  TagIcon,
-  ClockIcon,
-  CheckCircleIcon,
-  FireIcon
-} from '@heroicons/react/24/outline';
-import { StarIcon as StarSolidIcon } from '@heroicons/react/24/solid';
+  Gift, 
+  Star, 
+  CreditCard, 
+  Tag,
+  Clock,
+  CheckCircle,
+  Flame
+} from 'lucide-react';
 
 export default function RewardsPage() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [activeTab, setActiveTab] = useState('all');
   const [userPoints] = useState(1250);
   const [userCredits] = useState(45);
@@ -130,37 +133,50 @@ export default function RewardsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">TopCV Rewards</h1>
-              <p className="text-gray-600 mt-1">Đổi điểm lấy quà - Trải nghiệm dịch vụ</p>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div className="bg-gray-50 min-h-screen w-full">
+      <DashboardHeader 
+        onMenuClick={() => setSidebarOpen(!sidebarOpen)} 
+        onToggleSidebar={() => setSidebarCollapsed(!sidebarCollapsed)}
+      />
+      
+      <div className="flex w-full">
+        <Sidebar 
+          isOpen={sidebarOpen} 
+          onClose={() => setSidebarOpen(false)}
+          isCollapsed={sidebarCollapsed}
+        />
+        
+        <main className={`flex-1 w-full transition-all duration-300 ${
+          sidebarCollapsed ? 'lg:ml-16' : 'lg:ml-64'
+        } lg:w-auto`}>
+          <div className="px-4 py-4">
+            <div className="max-w-7xl mx-auto">
+              {/* Page Header */}
+              <div className="mb-8">
+                <h1 className="text-3xl font-bold text-gray-900">TopCV Rewards</h1>
+                <p className="text-gray-600 mt-2">Đổi điểm lấy quà - Trải nghiệm dịch vụ premium</p>
+              </div>
 
-      <div className="p-6 space-y-6">
-        {/* User Points & Level */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Points Balance */}
-          <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-xl shadow-lg text-white p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center">
-                <div className="bg-white/20 rounded-lg p-2 mr-3">
-                  <StarIcon className="h-6 w-6" />
+              {/* User Points & Level */}
+
+              {/* User Points & Level */}
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                {/* Points Balance */}
+                <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-xl shadow-lg text-white p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center">
+                      <div className="bg-white/20 rounded-lg p-2 mr-3">
+                        <Star className="h-6 w-6" />
+                      </div>
                 </div>
                 <div>
                   <p className="text-green-100 text-sm">Top Point</p>
-                  <p className="text-2xl font-bold">{userPoints.toLocaleString()} TP</p>
+                  <p className="text-2xl font-bold">{userPoints} TP</p>
                 </div>
               </div>
             </div>
             <div className="flex items-center text-green-100 text-sm">
-              <ClockIcon className="h-4 w-4 mr-1" />
+              <Clock className="h-4 w-4 mr-1" />
               <span>Có hiệu lực đến 31/12/2025</span>
             </div>
           </div>
@@ -170,7 +186,7 @@ export default function RewardsPage() {
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center">
                 <div className="bg-white/20 rounded-lg p-2 mr-3">
-                  <CreditCardIcon className="h-6 w-6" />
+                  <CreditCard className="h-6 w-6" />
                 </div>
                 <div>
                   <p className="text-blue-100 text-sm">Credit Point</p>
@@ -179,7 +195,7 @@ export default function RewardsPage() {
               </div>
             </div>
             <div className="flex items-center text-blue-100 text-sm">
-              <CheckCircleIcon className="h-4 w-4 mr-1" />
+              <CheckCircle className="h-4 w-4 mr-1" />
               <span>Không giới hạn thời gian</span>
             </div>
           </div>
@@ -189,7 +205,7 @@ export default function RewardsPage() {
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center">
                 <div className="bg-yellow-100 rounded-lg p-2 mr-3">
-                  <StarSolidIcon className="h-6 w-6 text-yellow-500" />
+                  <Star className="h-6 w-6 text-yellow-500 fill-current" />
                 </div>
                 <div>
                   <p className="text-gray-600 text-sm">Hạng thành viên</p>
@@ -243,7 +259,7 @@ export default function RewardsPage() {
                   {reward.hot && (
                     <div className="absolute top-3 left-3 z-10">
                       <div className="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full flex items-center">
-                        <FireIcon className="h-3 w-3 mr-1" />
+                        <Flame className="h-3 w-3 mr-1" />
                         HOT
                       </div>
                     </div>
@@ -252,7 +268,7 @@ export default function RewardsPage() {
                   {/* Image */}
                   <div className="aspect-w-16 aspect-h-9 bg-gray-100 rounded-t-xl">
                     <div className="flex items-center justify-center h-32 bg-gradient-to-br from-gray-100 to-gray-200 rounded-t-xl">
-                      <GiftIcon className="h-12 w-12 text-gray-400" />
+                      <Gift className="h-12 w-12 text-gray-400" />
                     </div>
                   </div>
 
@@ -270,11 +286,11 @@ export default function RewardsPage() {
                     {/* Rating */}
                     <div className="flex items-center mb-3">
                       <div className="flex items-center">
-                        {[...Array(5)].map((_, i) => (
-                          <StarSolidIcon
+                        {Array.from({ length: 5 }, (_, i) => (
+                          <Star
                             key={i}
                             className={`h-4 w-4 ${
-                              i < Math.floor(reward.rating) ? 'text-yellow-400' : 'text-gray-200'
+                              i < Math.floor(reward.rating) ? 'text-yellow-400 fill-current' : 'text-gray-200'
                             }`}
                           />
                         ))}
@@ -289,13 +305,13 @@ export default function RewardsPage() {
                       <div className="flex items-center space-x-2">
                         {reward.points > 0 && (
                           <div className="flex items-center text-green-600">
-                            <StarIcon className="h-4 w-4 mr-1" />
+                            <Star className="h-4 w-4 mr-1" />
                             <span className="font-bold">{reward.points} TP</span>
                           </div>
                         )}
                         {reward.credits > 0 && (
                           <div className="flex items-center text-blue-600">
-                            <CreditCardIcon className="h-4 w-4 mr-1" />
+                            <CreditCard className="h-4 w-4 mr-1" />
                             <span className="font-bold">{reward.credits} CP</span>
                           </div>
                         )}
@@ -340,34 +356,36 @@ export default function RewardsPage() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="text-center">
               <div className="bg-green-100 rounded-full p-3 w-12 h-12 mx-auto mb-2 flex items-center justify-center">
-                <CheckCircleIcon className="h-6 w-6 text-green-600" />
+                <CheckCircle className="h-6 w-6 text-green-600" />
               </div>
               <h4 className="font-medium text-gray-900 text-sm">Hoàn thiện hồ sơ</h4>
               <p className="text-xs text-gray-600 mt-1">+50 TP</p>
             </div>
             <div className="text-center">
               <div className="bg-blue-100 rounded-full p-3 w-12 h-12 mx-auto mb-2 flex items-center justify-center">
-                <GiftIcon className="h-6 w-6 text-blue-600" />
+                <Gift className="h-6 w-6 text-blue-600" />
               </div>
               <h4 className="font-medium text-gray-900 text-sm">Ứng tuyển việc làm</h4>
               <p className="text-xs text-gray-600 mt-1">+20 TP/lần</p>
             </div>
             <div className="text-center">
               <div className="bg-purple-100 rounded-full p-3 w-12 h-12 mx-auto mb-2 flex items-center justify-center">
-                <StarIcon className="h-6 w-6 text-purple-600" />
+                <Star className="h-6 w-6 text-purple-600" />
               </div>
               <h4 className="font-medium text-gray-900 text-sm">Đánh giá công ty</h4>
               <p className="text-xs text-gray-600 mt-1">+30 TP/lần</p>
             </div>
             <div className="text-center">
               <div className="bg-orange-100 rounded-full p-3 w-12 h-12 mx-auto mb-2 flex items-center justify-center">
-                <TagIcon className="h-6 w-6 text-orange-600" />
+                <Tag className="h-6 w-6 text-orange-600" />
               </div>
               <h4 className="font-medium text-gray-900 text-sm">Giới thiệu bạn bè</h4>
               <p className="text-xs text-gray-600 mt-1">+100 TP/lần</p>
             </div>
           </div>
         </div>
+          </div>
+        </main>
       </div>
     </div>
   );

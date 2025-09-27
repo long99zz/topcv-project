@@ -1,9 +1,13 @@
 'use client';
 
-import { useState } from 'react';
-import { ChartBarIcon, ArrowTrendingUpIcon, BriefcaseIcon, UserGroupIcon } from '@heroicons/react/24/outline';
+import React, { useState } from 'react';
+import DashboardHeader from '@/components/dashboard/DashboardHeader';
+import Sidebar from '@/components/dashboard/Sidebar';
+import { BarChart3, TrendingUp, Briefcase, Users } from 'lucide-react';
 
 export default function InsightsPage() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [selectedPeriod, setSelectedPeriod] = useState('30days');
 
   const marketStats = [
@@ -11,7 +15,7 @@ export default function InsightsPage() {
       title: 'Tổng số công việc',
       value: '45,234',
       change: '+12.5%',
-      icon: BriefcaseIcon,
+      icon: Briefcase,
       color: 'text-blue-600',
       bgColor: 'bg-blue-50',
     },
@@ -19,7 +23,7 @@ export default function InsightsPage() {
       title: 'Ứng viên mới',
       value: '12,890',
       change: '+8.3%',
-      icon: UserGroupIcon,
+      icon: Users,
       color: 'text-green-600',
       bgColor: 'bg-green-50',
     },
@@ -27,7 +31,7 @@ export default function InsightsPage() {
       title: 'Mức lương trung bình',
       value: '18.5M',
       change: '+5.2%',
-      icon: ArrowTrendingUpIcon,
+      icon: TrendingUp,
       color: 'text-purple-600',
       bgColor: 'bg-purple-50',
     },
@@ -35,7 +39,7 @@ export default function InsightsPage() {
       title: 'Tỷ lệ khớp việc',
       value: '67.8%',
       change: '+3.1%',
-      icon: ChartBarIcon,
+      icon: BarChart3,
       color: 'text-orange-600',
       bgColor: 'bg-orange-50',
     },
@@ -58,32 +62,44 @@ export default function InsightsPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">TopCV Insights</h1>
-              <p className="text-gray-600 mt-1">Phân tích thị trường việc làm</p>
-            </div>
-            <div className="flex items-center space-x-4">
-              <select
-                value={selectedPeriod}
-                onChange={(e) => setSelectedPeriod(e.target.value)}
-                className="border border-gray-300 rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-green-500 focus:border-transparent"
-              >
-                <option value="7days">7 ngày qua</option>
-                <option value="30days">30 ngày qua</option>
-                <option value="90days">90 ngày qua</option>
-                <option value="1year">1 năm qua</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div className="bg-gray-50 min-h-screen w-full">
+      <DashboardHeader 
+        onMenuClick={() => setSidebarOpen(!sidebarOpen)} 
+        onToggleSidebar={() => setSidebarCollapsed(!sidebarCollapsed)}
+      />
+      
+      <div className="flex w-full">
+        <Sidebar 
+          isOpen={sidebarOpen} 
+          onClose={() => setSidebarOpen(false)}
+          isCollapsed={sidebarCollapsed}
+        />
+        
+        <main className={`flex-1 w-full transition-all duration-300 ${
+          sidebarCollapsed ? 'lg:ml-16' : 'lg:ml-64'
+        } lg:w-auto`}>
+          <div className="px-4 py-4">
+            <div className="max-w-7xl mx-auto">
+              {/* Header */}
+              <div className="mb-8">
+                <h1 className="text-3xl font-bold text-gray-900">TopCV Insights</h1>
+                <p className="text-gray-600 mt-2">Phân tích thị trường việc làm và xu hướng tuyển dụng</p>
+                
+                <div className="mt-4">
+                  <select
+                    value={selectedPeriod}
+                    onChange={(e) => setSelectedPeriod(e.target.value)}
+                    className="border border-gray-300 rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                  >
+                    <option value="7days">7 ngày qua</option>
+                    <option value="30days">30 ngày qua</option>
+                    <option value="90days">90 ngày qua</option>
+                    <option value="1year">1 năm qua</option>
+                  </select>
+                </div>
+              </div>
 
-      <div className="p-6 space-y-6">
+              <div className="space-y-6">
         {/* Market Overview Stats */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {marketStats.map((stat, index) => (
@@ -175,7 +191,7 @@ export default function InsightsPage() {
             </div>
             <div className="hidden lg:block">
               <div className="w-32 h-32 bg-white/10 rounded-full flex items-center justify-center">
-                <ChartBarIcon className="h-16 w-16 text-white/80" />
+                <BarChart3 className="h-16 w-16 text-white/80" />
               </div>
             </div>
           </div>
@@ -191,28 +207,32 @@ export default function InsightsPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="text-center">
                 <div className="bg-blue-50 rounded-full p-4 w-16 h-16 mx-auto mb-3 flex items-center justify-center">
-                  <ArrowTrendingUpIcon className="h-8 w-8 text-blue-600" />
+                  <TrendingUp className="h-8 w-8 text-blue-600" />
                 </div>
                 <h4 className="font-medium text-gray-900 mb-1">Remote Work</h4>
                 <p className="text-sm text-gray-600">Tăng 45% công việc remote</p>
               </div>
               <div className="text-center">
                 <div className="bg-green-50 rounded-full p-4 w-16 h-16 mx-auto mb-3 flex items-center justify-center">
-                  <BriefcaseIcon className="h-8 w-8 text-green-600" />
+                  <Briefcase className="h-8 w-8 text-green-600" />
                 </div>
                 <h4 className="font-medium text-gray-900 mb-1">Tech Skills</h4>
                 <p className="text-sm text-gray-600">AI/ML skills được ưa chuộng</p>
               </div>
               <div className="text-center">
                 <div className="bg-purple-50 rounded-full p-4 w-16 h-16 mx-auto mb-3 flex items-center justify-center">
-                  <UserGroupIcon className="h-8 w-8 text-purple-600" />
+                  <Users className="h-8 w-8 text-purple-600" />
                 </div>
                 <h4 className="font-medium text-gray-900 mb-1">Gen Z</h4>
                 <p className="text-sm text-gray-600">Gia tăng ứng viên trẻ</p>
               </div>
+              </div>
+            </div>
+            </div>
             </div>
           </div>
-        </div>
+          </div>
+        </main>
       </div>
     </div>
   );

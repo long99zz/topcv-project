@@ -22,7 +22,7 @@ const Header = () => {
               <li><a className="text-green-600 hover:text-green-600 block px-3 py-5 text-center font-medium" href="#">Giới thiệu</a></li>
               <li><a className="hover:text-green-600 block px-3 py-5 text-center font-medium" href="#">Dịch vụ</a></li>
               <li><a className="hover:text-green-600 block px-3 py-5 text-center font-medium" href="/pricing">Báo giá</a></li>
-              <li><a className="hover:text-green-600 block px-3 py-5 text-center font-medium" href="#">Hỗ trợ</a></li>
+              <li><Link href="/help" className="hover:text-green-600 block px-3 py-5 text-center font-medium">Hỗ trợ</Link></li>
               <li><a className="hover:text-green-600 block px-3 py-5 text-center font-medium" href="#">Blog tuyển dụng</a></li>
             </ul>
             <div className="md:flex md:items-center md:justify-end md:py-0 md:ml-auto md:gap-[8px]">

@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
+import DashboardHeader from '@/components/dashboard/DashboardHeader';
+import Sidebar from '@/components/dashboard/Sidebar';
 import { 
   DocumentTextIcon,
   EyeIcon,
@@ -31,6 +33,8 @@ interface CV {
 }
 
 export default function CVManagementPage() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [cvList] = useState<CV[]>([
     {
       id: '1',
@@ -104,21 +108,37 @@ export default function CVManagementPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">CV đề xuất</h1>
-              <p className="text-gray-600 mt-1">Quản lý và tối ưu hóa CV của bạn</p>
-            </div>
-            <button className="bg-green-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-700 transition-colors flex items-center">
-              <PlusIcon className="h-5 w-5 mr-2" />
-              Tạo CV mới
-            </button>
-          </div>
-        </div>
+    <div className="bg-gray-50 min-h-screen w-full">
+      <DashboardHeader 
+        onMenuClick={() => setSidebarOpen(!sidebarOpen)} 
+        onToggleSidebar={() => setSidebarCollapsed(!sidebarCollapsed)}
+      />
+      
+      <div className="flex w-full">
+        <Sidebar 
+          isOpen={sidebarOpen} 
+          onClose={() => setSidebarOpen(false)}
+          isCollapsed={sidebarCollapsed}
+        />
+        
+        <main className={`flex-1 w-full transition-all duration-300 ${
+          sidebarCollapsed ? 'lg:ml-16' : 'lg:ml-64'
+        } lg:w-auto`}>
+          <div className="min-h-screen bg-gray-50">
+            {/* Header */}
+            <div className="bg-white shadow-sm border-b">
+              <div className="px-6 py-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h1 className="text-2xl font-bold text-gray-900">CV đề xuất</h1>
+                    <p className="text-gray-600 mt-1">Quản lý và tối ưu hóa CV của bạn</p>
+                  </div>
+                  <button className="bg-green-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-700 transition-colors flex items-center">
+                    <PlusIcon className="h-5 w-5 mr-2" />
+                    Tạo CV mới
+                  </button>
+                </div>
+              </div>
       </div>
 
       <div className="p-6 space-y-6">
@@ -405,6 +425,9 @@ export default function CVManagementPage() {
             </div>
           </div>
         </div>
+      </div>
+          </div>
+        </main>
       </div>
     </div>
   );

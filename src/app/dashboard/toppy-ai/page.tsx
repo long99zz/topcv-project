@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import DashboardHeader from '@/components/dashboard/DashboardHeader';
+import Sidebar from '@/components/dashboard/Sidebar';
 import { 
   PaperAirplaneIcon,
   DocumentTextIcon,
@@ -27,6 +29,8 @@ interface Message {
 }
 
 export default function ToppyAIPage() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
@@ -126,24 +130,40 @@ export default function ToppyAIPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <div className="bg-gradient-to-br from-green-400 to-green-600 rounded-full p-3 mr-4">
-                <SparklesIcon className="h-6 w-6 text-white" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold text-gray-900">Toppy AI</h1>
-                <p className="text-gray-600 mt-1">Trợ lý tuyển dụng thông minh</p>
-              </div>
-            </div>
-            <div className="flex items-center space-x-3">
-              <div className="flex items-center bg-green-50 px-3 py-1 rounded-full">
-                <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
-                <span className="text-sm text-green-700 font-medium">Đang hoạt động</span>
+    <div className="bg-gray-50 min-h-screen w-full">
+      <DashboardHeader 
+        onMenuClick={() => setSidebarOpen(!sidebarOpen)} 
+        onToggleSidebar={() => setSidebarCollapsed(!sidebarCollapsed)}
+      />
+      
+      <div className="flex w-full">
+        <Sidebar 
+          isOpen={sidebarOpen} 
+          onClose={() => setSidebarOpen(false)}
+          isCollapsed={sidebarCollapsed}
+        />
+        
+        <main className={`flex-1 w-full transition-all duration-300 ${
+          sidebarCollapsed ? 'lg:ml-16' : 'lg:ml-64'
+        } lg:w-auto`}>
+          <div className="min-h-screen bg-gray-50">
+            {/* Header */}
+            <div className="bg-white shadow-sm border-b">
+              <div className="px-6 py-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center">
+                    <div className="bg-gradient-to-br from-green-400 to-green-600 rounded-full p-3 mr-4">
+                      <SparklesIcon className="h-6 w-6 text-white" />
+                    </div>
+                    <div>
+                      <h1 className="text-2xl font-bold text-gray-900">Toppy AI</h1>
+                      <p className="text-gray-600 mt-1">Trợ lý tuyển dụng thông minh</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <div className="flex items-center bg-green-50 px-3 py-1 rounded-full">
+                      <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+                      <span className="text-sm text-green-700 font-medium">Đang hoạt động</span>
               </div>
             </div>
           </div>
@@ -341,6 +361,9 @@ export default function ToppyAIPage() {
             </div>
           </div>
         </div>
+      </div>
+          </div>
+        </main>
       </div>
     </div>
   );
